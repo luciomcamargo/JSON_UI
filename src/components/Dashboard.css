@@ -1,0 +1,38 @@
+.flex {
+  display: flex;
+  justify-content: space-around;
+}
+.grid {
+  display: grid;
+  grid-template-columns: 2fr 2fr 1fr;
+  grid-gap: 0.1em;
+}
+.label {
+  background-color: blue;
+  font-size: 12px;
+}
+ul {
+  display: grid;
+  grid-auto-rows: 100px;
+  grid-gap: 0.1em;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+li {
+  background-color: gainsboro;
+  list-style-type: none;
+}
+.bcolor {
+  background-color: gainsboro;
+}
+.ReactTags__tags {
+  background-color: gainsboro;
+  font-weight: bold;
+}
+.ReactTags__tag {
+  margin: 0.2em;
+}
+/*.dlabel > li:nth-child(odd) 
+  display: none;
+}*/
