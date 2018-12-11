@@ -3,7 +3,6 @@
 <!-- vim-markdown-toc GitLab -->
 
 * [Introduction](#introduction)
-* [Initial Preparation](#initial-preparation)
 * [caniuse - Minimal data management prototype](#caniuse-minimal-data-management-prototype)
     * [First Version](#first-version)
     * [Second Version](#second-version)
@@ -11,22 +10,11 @@
     * [Fourth Version](#fourth-version)
 * [Technologies and Constraints](#technologies-and-constraints)
 
-<!-- vim-markdown-toc -->
-
 ## Introduction
 
 Welcome to your eccenca Frontend Developer JavaScript (React) Trial Day Smile :).
 We hope this document provides all relevant information you need in order to develop the described prototype.
 If you are in doubt or need help, do not hesitate ask your host.
-
-## Initial Preparation
-
-The following things have to be done at the beginning of the trial day:
-
-- You need to tell us your account name at gitlab.com
-  - create a new account if you do not have a gitlab account or if you do not want to use your existing account
-- we will create an repository at https://gitlab.com/eccenca/trial-day-yourname and give you access to it
-  - please do not publish your trial work in a public repository
 
 ## caniuse - Minimal data management prototype
 
