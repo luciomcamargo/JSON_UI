@@ -1,14 +1,14 @@
-import React, { Component } from "react";
-import axios from "axios";
-import "./Dashboard.css";
-import Pagination from "react-js-pagination";
-import { Button } from "reactstrap";
-import { WithContext as ReactTags } from "react-tag-input";
-import { Link } from "react-router-dom";
-const uuidv1 = require("uuid/v1");
+import React, { Component } from 'react';
+import axios from 'axios';
+import './Dashboard.css';
+import Pagination from 'react-js-pagination';
+import { Button } from 'reactstrap';
+import { WithContext as ReactTags } from 'react-tag-input';
+import { Link } from 'react-router-dom';
+const uuidv1 = require('uuid/v1');
 
 //Pagination
-const DATA_PER_PAGE = 6;
+const DATA_PER_PAGE = 5;
 
 export class Dashboard extends Component {
   constructor(props) {
@@ -16,8 +16,8 @@ export class Dashboard extends Component {
     this.state = {
       data: [],
       activePage: 1,
-      search: "",
-      helper: "",
+      search: '',
+      helper: '',
       tags: []
     };
   }
@@ -38,12 +38,12 @@ export class Dashboard extends Component {
     });
     // Description of Work(4th Version) -tag assignments should be saved in my browser
     try {
-      const state = window.localStorage.getItem("state");
+      const state = window.localStorage.getItem('state');
       this.setState({ ...JSON.parse(state) });
     } catch (e) {}
   }
   componentDidUpdate() {
-    window.localStorage.setItem("state", JSON.stringify(this.state));
+    window.localStorage.setItem('state', JSON.stringify(this.state));
   }
   handlePageChange(pageNumber) {
     this.setState({ activePage: pageNumber });
@@ -85,13 +85,13 @@ export class Dashboard extends Component {
   //Each tag is added to the corresponding array of tags for each title.
   //Replace is used with a regex function to only search for alphanumeric characters.
   handleAddition = tag => {
-    let tagvalue = Object.values(tag.id).join("");
+    let tagvalue = Object.values(tag.id).join('');
     let tagkey = Object.keys(tag)[1];
 
     let index = this.state.data.findIndex(el => {
       return el.title
-        .replace(/[^a-zA-Z ]/g, "")
-        .match(tagkey.replace(/[^a-zA-Z ]/g, ""));
+        .replace(/[^a-zA-Z ]/g, '')
+        .match(tagkey.replace(/[^a-zA-Z ]/g, ''));
     });
     let addtag = this.state.data;
     addtag[index].tags.push(tagvalue.toLowerCase());
@@ -105,77 +105,68 @@ export class Dashboard extends Component {
     const indexOfLastData = this.state.activePage * DATA_PER_PAGE;
     const indexOfFirstData = indexOfLastData - DATA_PER_PAGE;
     const { tags } = this.state;
-
-    //Pagination
     const data = this.state.data.slice(indexOfFirstData, indexOfLastData);
 
-    //Description of Work(3rd Version)
-    //The detail view of a feature should be available as a deep link to the app (routing)
-    const datatitle = data.map(d => (
-      <Link className="bcolor" to={`/detail/${d.title}`} key={uuidv1()}>
-        {d.title}
-      </Link>
-    ));
-    const datadescription = data.map(d => (
-      <li key={uuidv1()}>{d.description}</li>
-    ));
-    const datatags = data.map(d => (
-      <ReactTags
-        key={d.title}
-        tags={tags}
-        handleDelete={this.handleDelete}
-        handleAddition={this.handleAddition}
-        labelField={d.title}
-        autofocus={false}
-        removeComponent={() => <span />}
-        allowUnique={false}
-      />
+    const mappeddata = data.map(d => (
+      <div className='grid'>
+        <span className='titles'>
+          <Link className='bcolor' to={`/detail/${d.title}`} key={uuidv1()}>
+            {d.title}
+          </Link>
+        </span>
+        <span key={uuidv1()}>{d.description}</span>
+        <span>
+          <ReactTags
+            key={d.title}
+            tags={tags}
+            handleDelete={this.handleDelete}
+            handleAddition={this.handleAddition}
+            labelField={d.title}
+            autofocus={false}
+            removeComponent={() => <span />}
+            allowUnique={false}
+          />
+        </span>
+      </div>
     ));
 
     return (
-      <div>
-        <div className="flex">
+      <div className='page'>
+        <div className='flex'>
           <form
-            className="form-row"
-            action="action_page.php"
+            className='form-row'
+            action='action_page.php'
             onSubmit={this.handleSubmit}
           >
             <input
-              type="text"
+              className='search'
+              type='text'
               value={this.state.search}
               onChange={this.handleChange}
             />
-            <Button outline color="primary">
+            <Button outline color='primary'>
               Search
             </Button>
           </form>
+        </div>
+        <div className='grid-header'>
+          <div>Title</div>
+          <div>Description</div>
+
+          <div>Tags(add with ENTER/delete with BACKSPACE)</div>
+        </div>
+        {mappeddata}
+        <div className='pagination'>
           <Pagination
-            itemClass="page-item"
-            linkClass="page-link"
-            className="pagination"
+            itemClass='page-item'
+            linkClass='page-link'
+            className='pagination'
             activePage={this.state.activePage}
-            itemsCountPerPage={6}
+            itemsCountPerPage={5}
             totalItemsCount={this.state.data.length}
             pageRangeDisplayed={10}
             onChange={this.handlePageChange.bind(this)}
           />
-        </div>
-
-        <div className="grid">
-          <div>
-            <div className="label">Title</div>
-            <ul>{datatitle}</ul>
-          </div>
-          <div>
-            <div className="label">Description</div>
-            <ul className="dlabel">{datadescription}</ul>
-          </div>
-          <div>
-            <div className="label">
-              Tags(add with ENTER/delete with BACKSPACE)
-            </div>
-            <ul>{datatags}</ul>
-          </div>
         </div>
       </div>
     );
