@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import axios from "axios";
+import React, { Component } from 'react';
+import axios from 'axios';
 
 export class Details extends Component {
   constructor(props) {
@@ -11,7 +11,7 @@ export class Details extends Component {
     };
   }
   componentDidMount() {
-    axios.get(`http://localhost:3000/db.json`).then(res => {
+    axios.get(`db.json`).then(res => {
       const dataArray = Object.values(res.data.data);
 
       const index = dataArray.findIndex(
@@ -28,15 +28,15 @@ export class Details extends Component {
 
     return (
       <div>
-        <div className="col-md-12">
-          <div className="card mb-12 ">
-            <div className="card-body">
+        <div className='col-md-12'>
+          <div className='card mb-12 '>
+            <div className='card-body'>
               <div>
                 <strong>Title</strong>
                 <span>: {data.title} </span>
                 <br />
                 <strong>Description</strong>
-                <span itemProp="name">: {data.description} </span>
+                <span itemProp='name'>: {data.description} </span>
                 <br />
               </div>
 
