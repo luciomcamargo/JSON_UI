@@ -2,19 +2,13 @@
 
 <!-- vim-markdown-toc GitLab -->
 
-* [Introduction](#introduction)
-* [caniuse - Minimal data management prototype](#caniuse-minimal-data-management-prototype)
-    * [First Version](#first-version)
-    * [Second Version](#second-version)
-    * [Third Version](#third-version)
-    * [Fourth Version](#fourth-version)
-* [Technologies and Constraints](#technologies-and-constraints)
-
-## Introduction
-
-Welcome to your eccenca Frontend Developer JavaScript (React) Trial Day Smile :).
-We hope this document provides all relevant information you need in order to develop the described prototype.
-If you are in doubt or need help, do not hesitate ask your host.
+- [Introduction](#introduction)
+- [caniuse - Minimal data management prototype](#caniuse-minimal-data-management-prototype)
+  - [First Version](#first-version)
+  - [Second Version](#second-version)
+  - [Third Version](#third-version)
+  - [Fourth Version](#fourth-version)
+- [Technologies and Constraints](#technologies-and-constraints)
 
 ## caniuse - Minimal data management prototype
 
@@ -58,4 +52,3 @@ The following technologies / constraints should be used:
 - gitlab based project management (organise versions, tasks / issues, spec there, communicate there)
 - basic documentation (code and readme)
 - stretch goal: basic unit testing
-
