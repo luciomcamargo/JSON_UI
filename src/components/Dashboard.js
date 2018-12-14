@@ -3,7 +3,6 @@ import axios from 'axios';
 import './Dashboard.css';
 import Pagination from 'react-js-pagination';
 import { Button } from 'reactstrap';
-import { WithContext as ReactTags } from 'react-tag-input';
 import { Link } from 'react-router-dom';
 const uuidv1 = require('uuid/v1');
 
@@ -18,7 +17,7 @@ export class Dashboard extends Component {
       activePage: 1,
       search: '',
       helper: '',
-      tags: []
+      tag: ''
     };
   }
 
@@ -52,8 +51,9 @@ export class Dashboard extends Component {
   // Used filter method to only display matching tags when user searches for tags.
   // Description of Work(4th Version) - tags should be found when searching by its name
   handleSubmit = event => {
-    const { search, data, tags } = this.state;
-    const mapTags = tags.map(d => d.id.toLowerCase());
+    event.preventDefault();
+    const { search, data } = this.state;
+    const mapTags = data.map(tag => tag.tags).flat();
     const filterTags = data.filter(d => d.tags.includes(search));
     const filterTitles = data.filter(d => {
       return d.title.toLowerCase().match(search);
@@ -74,19 +74,28 @@ export class Dashboard extends Component {
     this.setState({ search: event.target.value.toLowerCase() });
     this.setState({ data: this.state.helper });
   };
-  handleDelete = i => {
-    const { tags } = this.state;
-    this.setState({
-      tags: tags.filter((tag, index) => index !== i)
-    });
+  handleTag = event => {
+    this.setState({ tag: event.target.value });
+  };
+  handleDelete = event => {
+    let tagvalue = event.target.value;
+    let index = this.state.data.findIndex(i => i.tags.includes(tagvalue));
+
+    let tagIndex = this.state.data[index].tags.findIndex(i =>
+      i.match(tagvalue)
+    );
+    let filteredData = this.state.data;
+    filteredData[index].tags.splice(tagIndex, 1);
+    this.setState({ data: filteredData });
   };
 
   //Tags are matched with titles that have the corresponding index.
   //Each tag is added to the corresponding array of tags for each title.
   //Replace is used with a regex function to only search for alphanumeric characters.
-  handleAddition = tag => {
-    let tagvalue = Object.values(tag.id).join('');
-    let tagkey = Object.keys(tag)[1];
+  handleAddition = event => {
+    event.preventDefault();
+    let tagvalue = this.state.tag;
+    let tagkey = event.target.value;
 
     let index = this.state.data.findIndex(el => {
       return el.title
@@ -97,35 +106,51 @@ export class Dashboard extends Component {
     addtag[index].tags.push(tagvalue.toLowerCase());
 
     this.setState({ data: addtag });
-
-    this.setState(state => ({ tags: [...state.tags, tag] }));
+    document.getElementById(tagkey).reset();
   };
 
   render() {
     const indexOfLastData = this.state.activePage * DATA_PER_PAGE;
     const indexOfFirstData = indexOfLastData - DATA_PER_PAGE;
-    const { tags } = this.state;
     const data = this.state.data.slice(indexOfFirstData, indexOfLastData);
 
     const mappeddata = data.map(d => (
       <div className='grid'>
         <span className='titles'>
-          <Link className='bcolor' to={`/detail/${d.title}`} key={uuidv1()}>
+          <Link className='bcolor' to={`/detail/${d.title}`}>
             {d.title}
           </Link>
         </span>
         <span key={uuidv1()}>{d.description}</span>
-        <span>
-          <ReactTags
-            key={d.title}
-            tags={tags}
-            handleDelete={this.handleDelete}
-            handleAddition={this.handleAddition}
-            labelField={d.title}
-            autofocus={false}
-            removeComponent={() => <span />}
-            allowUnique={false}
-          />
+        <span className='tagbox'>
+          <div className='tag-container'>
+            {d.tags.map(tag => (
+              <span className='dashfolio-tag'>
+                {tag}
+                <button
+                  value={tag}
+                  className='deltag'
+                  onClick={this.handleDelete}
+                >
+                  X
+                </button>
+              </span>
+            ))}
+          </div>
+
+          <form className='form-inline' id={d.title}>
+            <div className='form-group'>
+              <input className='form-control' onChange={this.handleTag} />
+            </div>
+            <button
+              type='submit'
+              className='btn btn-default'
+              value={d.title}
+              onClick={this.handleAddition}
+            >
+              Add
+            </button>
+          </form>
         </span>
       </div>
     ));
@@ -133,11 +158,7 @@ export class Dashboard extends Component {
     return (
       <div className='page'>
         <div className='flex'>
-          <form
-            className='form-row'
-            action='action_page.php'
-            onSubmit={this.handleSubmit}
-          >
+          <form className='form-row' onSubmit={this.handleSubmit}>
             <input
               className='search'
               type='text'
@@ -153,7 +174,7 @@ export class Dashboard extends Component {
           <div>Title</div>
           <div>Description</div>
 
-          <div>Tags(add with ENTER/delete with BACKSPACE)</div>
+          <div>Tags</div>
         </div>
         {mappeddata}
         <div className='pagination'>

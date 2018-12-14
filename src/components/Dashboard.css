@@ -44,15 +44,49 @@
 .search {
   width: 30vw;
 }
-.ReactTags__selected span.ReactTags__tag {
-  border: 0.07vw solid #ddd;
-  background: #eee;
-  font-size: 1.2vw;
-  display: inline-block;
-  padding: 0.3vh;
-  padding-left: 0.5vw;
-  padding-right: 0.5vw;
-  margin: 0.1vw;
-  border-radius: 0.1vw;
-  font-weight: bold;
+
+.form-inline {
+  display: flex;
+  align-items: flex-end !important;
+}
+.form-control {
+  width: 12vw !important;
+}
+.tagbox {
+  display: flex;
+  flex-direction: column;
+}
+.tag-container {
+  max-width: 500px;
+}
+
+.tag-container:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: ' ';
+  clear: both;
+  height: 0;
+}
+
+.dashfolio-tag {
+  cursor: pointer;
+  background-color: blue;
+  padding: 5px 10px 5px 10px;
+  margin-top: -8px;
+  margin-bottom: 9px; /*incase tags go in next line, will space */
+  color: #fff;
+  margin-right: 1px;
+  background: #2ea879;
+  padding-right: 2px; /* adds space inside the tags for the 'x' button */
+  float: left;
+}
+
+.dashfolio-tag:hover {
+  opacity: 0.7;
+}
+.deltag {
+  font-size: 11px;
+  background: #2ea879;
+  border: none;
 }

@@ -11,7 +11,7 @@ export class Details extends Component {
     };
   }
   componentDidMount() {
-    axios.get(`db.json`).then(res => {
+    axios.get(`http://localhost:3000/db.json`).then(res => {
       const dataArray = Object.values(res.data.data);
 
       const index = dataArray.findIndex(
