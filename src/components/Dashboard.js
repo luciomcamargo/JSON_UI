@@ -23,7 +23,7 @@ export class Dashboard extends Component {
 
   componentDidMount() {
     // Mapped and used ES6 destructuring to send to state relevant entries from json data file
-    axios.get(`db.json`).then(res => {
+    axios.get(`http://luciocamargo.com/JSON_Data_Search/db.json`).then(res => {
       const data = Object.values(res.data.data).map(
         ({ title, description }) => ({
           title,
