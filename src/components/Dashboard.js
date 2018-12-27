@@ -36,14 +36,14 @@ export class Dashboard extends Component {
       this.setState({ helper: data });
     });
     // Description of Work(4th Version) -tag assignments should be saved in my browser
-    try {
-      const state = window.localStorage.getItem('state');
-      this.setState({ ...JSON.parse(state) });
-    } catch (e) {}
+    //try {
+    // const state = window.localStorage.getItem('state');
+    // this.setState({ ...JSON.parse(state) });
+    // } catch (e) {}
   }
-  componentDidUpdate() {
-    window.localStorage.setItem('state', JSON.stringify(this.state));
-  }
+  // componentDidUpdate() {
+  // window.localStorage.setItem('state', JSON.stringify(this.state));
+  // }
   handlePageChange(pageNumber) {
     this.setState({ activePage: pageNumber });
   }
